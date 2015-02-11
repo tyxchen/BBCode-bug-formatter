@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title></title>
+
+  <link href="css/normalize.css" rel="stylesheet">
+  <link href="css/foundation.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="row">
+  <h1>Build a bug</h1>
+    <div class="large-8 columns">
+      <form>
+        <div class="row">
+          <div class="small-12 columns">
+            <h4>Description</h4>
+            <textarea placeholder="Describe the bug"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            <h4>Steps to reproduce</h4>
+            <label>1.
+              <input type="text" placeholder="1.">
+            </label>
+            <div class="row">
+              <button class="tiny step-add">Add step</button>
+              <button class="tiny step-remove">Remove last step</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-6 columns">
+            <h4>Expected results</h4>
+            <textarea></textarea>
+          </div>
+          <div class="large-6 columns">
+            <h4>Actual results</h4>
+            <textarea></textarea>
+          </div>
+        </div>
+<!--        <button>Generate BBCode</button>-->
+      </form>
+    </div>
+    <div class="large-4 columns">
+      <!-- Insert BBCode output here -->
+    </div>
+  </div>
+
+  <script src="js/jquery.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-placeholder/2.0.8/jquery.placeholder.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.3/fastclick.min.js"></script>
+  <script src="js/foundation.min.js"></script>
+</body>
+</html>
