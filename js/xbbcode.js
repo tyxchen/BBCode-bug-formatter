@@ -96,10 +96,10 @@ var XBBCODE = (function() {
     tags = {
         "b": {
             openTag: function(params,content) {
-                return '<span class="xbbcode-b">';
+                return '<strong>';
             },
             closeTag: function(params,content) {
-                return '</span>';
+                return '</strong>';
             }
         },
         /*
@@ -114,21 +114,13 @@ var XBBCODE = (function() {
                 return '';
             }
         },
-        "center": {
-            openTag: function(params,content) {
-                return '<span class="xbbcode-center">';
-            },
-            closeTag: function(params,content) {
-                return '</span>';
-            }
-        },
 
         "code": {
             openTag: function(params,content) {
-                return '<span class="xbbcode-code">';
+                return '<pre>';
             },
             closeTag: function(params,content) {
-                return '</span>';
+                return '</pre>';
             },
             noParse: true
         },
@@ -176,21 +168,6 @@ var XBBCODE = (function() {
                 return '</a>';
             }
         },
-        "face": {
-            openTag: function(params,content) {
-
-                var faceCode = params.substr(1) || "inherit";
-                fontFacePattern.lastIndex = 0;
-                if ( !fontFacePattern.test( faceCode ) ) {
-                        faceCode = "inherit";
-                }
-                return '<span style="font-family:' + faceCode + '">';
-            },
-            closeTag: function(params,content) {
-                return '</span>';
-            }
-        },
-
 
         "font": {
             openTag: function(params,content) {
@@ -209,10 +186,10 @@ var XBBCODE = (function() {
 
         "i": {
             openTag: function(params,content) {
-                return '<span class="xbbcode-i">';
+                return '<em>';
             },
             closeTag: function(params,content) {
-                return '</span>';
+                return '</em>';
             }
         },
         "img": {
@@ -232,80 +209,14 @@ var XBBCODE = (function() {
             },
             displayContent: false
         },
-        "justify": {
-            openTag: function(params,content) {
-                return '<span class="xbbcode-justify">';
-            },
-            closeTag: function(params,content) {
-                return '</span>';
-            }
-        },
-        "large": {
-            openTag: function(params,content) {
-				var params = params || '';
-				var colorCode = params.substr(1) || "inherit";
-                colorNamePattern.lastIndex = 0;
-                colorCodePattern.lastIndex = 0;
-                if ( !colorNamePattern.test( colorCode ) ) {
-                    if ( !colorCodePattern.test( colorCode ) ) {
-                        colorCode = "inherit";
-                    } else {
-                        if (colorCode.substr(0,1) !== "#") {
-                            colorCode = "#" + colorCode;
-                        }
-                    }
-                }
-
-
-                return '<span class="xbbcode-size-36" style="color:' + colorCode + '">';
-            },
-            closeTag: function(params,content) {
-                return '</span>';
-            }
-        },
-        "left": {
-            openTag: function(params,content) {
-                return '<span class="xbbcode-left">';
-            },
-            closeTag: function(params,content) {
-                return '</span>';
-            }
-        },
-        "li": {
-            openTag: function(params,content) {
-                return "<li>";
-            },
-            closeTag: function(params,content) {
-                return "</li>";
-            },
-            restrictParentsTo: ["list","ul","ol"]
-        },
         "list": {
-            openTag: function(params,content) {
-                return '<ul>';
-            },
-            closeTag: function(params,content) {
-                return '</ul>';
-            },
-            restrictChildrenTo: ["*", "li"]
-        },
-        "noparse": {
-            openTag: function(params,content) {
-                return '';
-            },
-            closeTag: function(params,content) {
-                return '';
-            },
-            noParse: true
-        },
-        "ol": {
             openTag: function(params,content) {
                 return '<ol>';
             },
             closeTag: function(params,content) {
                 return '</ol>';
             },
-            restrictChildrenTo: ["*", "li"]
+            restrictChildrenTo: ["*"]
         },
         "php": {
             openTag: function(params,content) {
@@ -318,23 +229,15 @@ var XBBCODE = (function() {
         },
         "quote": {
             openTag: function(params,content) {
-                return '<blockquote class="xbbcode-blockquote">';
+                return '<blockquote>';
             },
             closeTag: function(params,content) {
                 return '</blockquote>';
             }
         },
-        "right": {
-            openTag: function(params,content) {
-                return '<span class="xbbcode-right">';
-            },
-            closeTag: function(params,content) {
-                return '</span>';
-            }
-        },
         "s": {
             openTag: function(params,content) {
-                return '<span class="xbbcode-s">';
+                return '<span style="text-decoration:strikethrough">';
             },
             closeTag: function(params,content) {
                 return '</span>';
@@ -343,140 +246,24 @@ var XBBCODE = (function() {
         "size": {
             openTag: function(params,content) {
 
-                var mySize = parseInt(params.substr(1),10) || 0;
-                if (mySize < 4 || mySize > 40) {
-                    mySize = 14;
+                var mySize = parseInt(params.substr(0, 2),10) || 0;
+                if (mySize < 1 || mySize > 200) {
+                    mySize = 100;
                 }
 
-                return '<span class="xbbcode-size-' + mySize + '">';
+                return '<span style="font-size:' + mySize + '%">';
             },
             closeTag: function(params,content) {
                 return '</span>';
             }
-        },
-        "small": {
-            openTag: function(params,content) {
-				var params = params || '';
-				var colorCode = params.substr(1) || "inherit";
-                colorNamePattern.lastIndex = 0;
-                colorCodePattern.lastIndex = 0;
-                if ( !colorNamePattern.test( colorCode ) ) {
-                    if ( !colorCodePattern.test( colorCode ) ) {
-                        colorCode = "inherit";
-                    } else {
-                        if (colorCode.substr(0,1) !== "#") {
-                            colorCode = "#" + colorCode;
-                        }
-                    }
-                }
-
-                return '<span class="xbbcode-size-10" style="color:' + colorCode + '">';
-            },
-            closeTag: function(params,content) {
-                return '</span>';
-            }
-        },
-
-        "sub": {
-            openTag: function(params,content) {
-                return '<sub>';
-            },
-            closeTag: function(params,content) {
-                return '</sub>';
-            }
-        },
-        "sup": {
-            openTag: function(params,content) {
-                return '<sup>';
-            },
-            closeTag: function(params,content) {
-                return '</sup>';
-            }
-        },
-
-        "table": {
-            openTag: function(params,content) {
-                return '<table class="xbbcode-table">';
-            },
-            closeTag: function(params,content) {
-                return '</table>';
-            },
-            restrictChildrenTo: ["tbody","thead", "tfoot", "tr"]
-        },
-        "tbody": {
-            openTag: function(params,content) {
-                return '<tbody>';
-            },
-            closeTag: function(params,content) {
-                return '</tbody>';
-            },
-            restrictChildrenTo: ["tr"],
-            restrictParentsTo: ["table"]
-        },
-        "tfoot": {
-            openTag: function(params,content) {
-                return '<tfoot>';
-            },
-            closeTag: function(params,content) {
-                return '</tfoot>';
-            },
-            restrictChildrenTo: ["tr"],
-            restrictParentsTo: ["table"]
-        },
-        "thead": {
-            openTag: function(params,content) {
-                return '<thead class="xbbcode-thead">';
-            },
-            closeTag: function(params,content) {
-                return '</thead>';
-            },
-            restrictChildrenTo: ["tr"],
-            restrictParentsTo: ["table"]
-        },
-        "td": {
-            openTag: function(params,content) {
-                return '<td class="xbbcode-td">';
-            },
-            closeTag: function(params,content) {
-                return '</td>';
-            },
-            restrictParentsTo: ["tr"]
-        },
-        "th": {
-            openTag: function(params,content) {
-                return '<th class="xbbcode-th">';
-            },
-            closeTag: function(params,content) {
-                return '</th>';
-            },
-            restrictParentsTo: ["tr"]
-        },
-        "tr": {
-            openTag: function(params,content) {
-                return '<tr class="xbbcode-tr">';
-            },
-            closeTag: function(params,content) {
-                return '</tr>';
-            },
-            restrictChildrenTo: ["td","th"],
-            restrictParentsTo: ["table","tbody","tfoot","thead"]
         },
         "u": {
             openTag: function(params,content) {
-                return '<span class="xbbcode-u">';
+                return '<span style="text-decoration:underline>';
             },
             closeTag: function(params,content) {
                 return '</span>';
             }
-        },
-        "ul": {
-            openTag: function(params,content) {
-                return '<ul>';
-            },
-            closeTag: function(params,content) {
-                return '</ul>';
-            },
-            restrictChildrenTo: ["*", "li"]
         },
         "url": {
             openTag: function(params,content) {
@@ -512,7 +299,7 @@ var XBBCODE = (function() {
             closeTag: function(params,content) {
                 return "</li>";
             },
-            restrictParentsTo: ["list","ul","ol"]
+            restrictParentsTo: ["list"]
         }
     };
 
