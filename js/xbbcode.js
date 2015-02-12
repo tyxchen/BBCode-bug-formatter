@@ -43,6 +43,7 @@ var XBBCODE = (function() {
         colorCodePattern = /^#?[a-fA-F0-9]{6}$/,
         emailPattern = /[^\s@]+@[^\s@]+\.[^\s@]+/,
         fontFacePattern = /^([a-z][a-z0-9_]+|"[a-z][a-z0-9_\s]+")$/i,
+        codeList,
         tags,
         tagList,
         tagsNoParseList = [],
@@ -50,7 +51,8 @@ var XBBCODE = (function() {
         pbbRegExp,
         pbbRegExp2,
         openTags,
-        closeTags;
+        closeTags,
+        i;
 
     /* -----------------------------------------------------------------------------
      * tags
@@ -218,15 +220,6 @@ var XBBCODE = (function() {
             },
             restrictChildrenTo: ["*"]
         },
-        "php": {
-            openTag: function(params,content) {
-                return '<span class="xbbcode-code">';
-            },
-            closeTag: function(params,content) {
-                return '</span>';
-            },
-            noParse: true
-        },
         "quote": {
             openTag: function(params,content) {
                 return '<blockquote>';
@@ -302,6 +295,58 @@ var XBBCODE = (function() {
             restrictParentsTo: ["list"]
         }
     };
+
+    // Code tags supported by AoPS
+    codeList = [
+        "ada",
+        "actionscript",
+        "apache",
+        "applescript",
+        "asm",
+        "asp",
+        "asymptote",
+        "bash",
+        "c",
+        "cpp",
+        "csharp",
+        "css",
+        "delphi",
+        "dos",
+        "eiffel",
+        "fortran",
+        "groovy",
+        "haskell",
+        "html",
+        "ini",
+        "java",
+        "js",
+        "latex",
+        "lisp",
+        "lua",
+        "mysql",
+        "objc",
+        "ocaml",
+        "perl",
+        "php",
+        "python",
+        "ruby",
+        "scheme",
+        "smalltalk",
+        "sql",
+        "tcl"
+    ];
+
+    for (i = 0; i < codeList.length; i++) {
+        tags[codeList[i]] = {
+            openTag: function(params,content) {
+                return '<pre>';
+            },
+            closeTag: function(params,content) {
+                return '</pre>';
+            },
+            noParse: true
+        };
+    }
 
     // create tag list and lookup fields
     function initTags() {
