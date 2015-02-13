@@ -19,11 +19,11 @@
       <form>
         <div class="row">
           <div class="small-12 columns">
-            <h5>Description</h5>
-            <textarea class="text description" rows="3" placeholder="Briefly describe the bug"></textarea>
+            <h5>Summary</h5>
+            <input type="text" class="text description" placeholder="Summarize the bug">
           </div>
         </div>
-        <div class="row">
+        <div class="row hidden">
           <div class="small-6 columns">
             <h5>Browser version</h5>
             <div class="row collapse">
@@ -60,7 +60,7 @@
                 <input type="text" class="text" data-step="1">
               </div>
               <div class="small-2 end columns">
-                <button class="tiny secondary postfix remove-step" disabled>Remove</button>
+                <button class="tiny secondary postfix remove-step" tabindex="1" disabled>Remove</button>
               </div>
             </div>
           </div>

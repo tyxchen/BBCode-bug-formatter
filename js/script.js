@@ -1,22 +1,20 @@
 /* jshint browser: true, es3: true */
-/* global jQuery: false */
+/* global jQuery: false, XBBCODE: false, browser: true, os: true, parseHandler: true */
 (function ($) {
   "use strict";
 
   // Detects a browser's version
   // Modified from https://stackoverflow.com/a/5918791/3472393
-  var browser = (function(){var u=navigator.userAgent,t,M=u.match(/(opera|chrome|crios|safari|firefox|msie|trident(?=\/))\/?\s*(\S+)/i)||[];if(/trident/i.test(M[1])){t=/\brv[ :]+(\d+)/g.exec(u)||[];return 'IE '+(t[1]||'')}if(M[1]==='CriOS')return "Chrome "+M[2];if(M[1]==='Chrome'){t=u.match(/\bOPR\/(\d+)/);if(t!=null)return 'Opera '+t[1]}M=M[2]?[M[1],M[2]]:[navigator.appName,navigator.appVersion,'-?'];if((t=u.match(/version\/(\d+)/i))!=null)M.splice(1,1,t[1]);return M.join(' ')})(),
+  var browser = (function(){var u=navigator.userAgent,t,M=u.match(/(opera|chrome|crios|safari|firefox|msie|trident(?=\/))\/?\s*(\S+)/i)||[];if(/trident/i.test(M[1])){t=/\brv[ :]+(\d+)/g.exec(u)||[];return 'IE '+(t[1]||'')}if(M[1]==='CriOS')return "Chrome "+M[2];if(M[1]==='Chrome'){t=u.match(/\bOPR\/(\d+)/);if(t!=null)return 'Opera '+t[1]}M=M[2]?[M[1],M[2]]:[navigator.appName,navigator.appVersion,'-?'];if((t=u.match(/version\/(\d+)/i))!=null)M.splice(1,1,t[1]);return M.join(' ')})(), // jshint ignore:line
 
   // Detects the operating system of a user
-      os = (function(){var u=navigator.userAgent,t,M=u.match(/(Windows NT|Mac OS X|CPU (iPhone )?OS|Android|Linux) (\S+)(?=;)/i);M=M[1]&&M[3]?[M[1],M[3]]:["Unknown"];if(/Windows/i.test(M[0])){t={"5.0":"2000","5.1":"XP","5.2":"XP","6.0":"Vista","6.1":"7","6.2":"8","6.3":"8.1","10.0":"10"};return "Windows "+t[M[1]]}if(/Mac/.test(M[0]))return "Mac OS X "+M[1].replace("_",".");if(/CPU(.+)OS/.test(M[0]))return "iOS "+M[1].replace("_",".");return M.join(" ")})(),
+      os = (function(){var u=navigator.userAgent,t,M=u.match(/(Windows NT|Mac OS X|CPU (iPhone )?OS|Android|Linux) (\S+)(?=;)/i);M=M[1]&&M[3]?[M[1],M[3]]:["Unknown"];if(/Windows/i.test(M[0])){t={"5.0":"2000","5.1":"XP","5.2":"XP","6.0":"Vista","6.1":"7","6.2":"8","6.3":"8.1","10.0":"10"};return "Windows "+t[M[1]]}if(/Mac/.test(M[0]))return "Mac OS X "+M[1].replace("_",".");if(/CPU(.+)OS/.test(M[0]))return "iOS "+M[1].replace("_",".");return M.join(" ")})(), // jshint ignore:line
 
   // Parses text from the various input fields
       parseHandler = function () {
         var text = "";
 
         // Description
-
-        text += "[b]Description:[/b]\n\n";
 
         text += $(".description").val() + "\n\n";
 
@@ -55,7 +53,7 @@
           removeMisalignedTags: true,
           addInLineBreaks: true
         }).html);
-      };
+      }; // jshint ignore:line
 
   // Prevent default action from occuring when button is pressed
   $("button").click(function (e) {
@@ -85,8 +83,10 @@
                        "<div class='small-9 columns'>" +
                        "<input type='text' class='text' data-step='" + count + "'>" +
                        "</div><div class='small-2 end columns'>" +
-                       "<button class='tiny secondary postfix remove-step'>Remove</button>" +
+                       "<button class='tiny secondary postfix remove-step' tabindex='1'>Remove</button>" +
                        "</div></div>");
+
+    $(".step:first-child button").prop("disabled", false);
 
     $(".text").trigger("keyup");
   });
@@ -101,9 +101,13 @@
     steps = $(".steps .step");
 
     // Re-number steps
-    for (var i = 0; i < steps.length; i++) {
+    for (i = 0; i < steps.length; i++) {
       steps[i].querySelector("label").textContent = (i + 1) + ".";
       steps[i].querySelector(".text").dataStep = i + 1;
+    }
+
+    if (steps.length === 1) {
+      $(".step button").prop("disabled", true);
     }
 
     $(".text").trigger("keyup");

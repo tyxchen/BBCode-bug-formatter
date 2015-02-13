@@ -1,3 +1,9 @@
+h1 {
+  margin-top: 1em;
+}
+.hidden {
+  display: none;
+}
 .step .right {
   text-align: center;
 }
@@ -20,4 +26,10 @@ button.remove-step[disabled]:hover {
 pre,
 .preview {
   white-space: pre-wrap;
+}
+.output {
+  -webkit-user-select: all;
+     -moz-user-select: all;
+      -ms-user-select: all;
+          user-select: all;
 }
