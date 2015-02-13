@@ -7,6 +7,8 @@
 
   <link href="css/normalize.css" rel="stylesheet">
   <link href="css/foundation.min.css" rel="stylesheet">
+
+  <link href="css/main.css" rel="stylesheet">
 </head>
 <body>
   <div class="row">
@@ -15,37 +17,80 @@
       <form>
         <div class="row">
           <div class="small-12 columns">
-            <h4>Description</h4>
-            <textarea placeholder="Describe the bug"></textarea>
+            <h5>Description</h5>
+            <textarea class="text description" placeholder="Describe the bug"></textarea>
           </div>
         </div>
         <div class="row">
-          <div class="small-12 columns">
-            <h4>Steps to reproduce</h4>
-            <label>1.
-              <input type="text" placeholder="1.">
-            </label>
-            <div class="row">
-              <button class="tiny step-add">Add step</button>
-              <button class="tiny step-remove">Remove last step</button>
+          <div class="large-6 columns">
+            <h5>Browser version</h5>
+            <div class="row collapse">
+              <div class="small-8 columns">
+                <input type="text" class="text browser" disabled>
+              </div>
+              <div class="small-4 columns">
+                <button class="tiny secondary postfix toggle-browser">Not my Browser</button>
+              </div>
+            </div>
+          </div>
+          <div class="large-6 columns">
+            <h5>Operating system</h5>
+            <div class="row collapse">
+              <div class="small-8 columns">
+                <input type="text" class="text os" disabled>
+              </div>
+              <div class="small-4 columns">
+                <button class="tiny secondary postfix toggle-os">Not my OS</button>
+              </div>
             </div>
           </div>
         </div>
         <div class="row">
+          <div class="large-12 columns">
+            <h5>Steps to reproduce</h5>
+          </div>
+          <div class="large-9 columns steps">
+            <div class="row collapse step">
+              <div class="small-1 columns">
+                <label class="right inline">1. </label>
+              </div>
+              <div class="small-9 columns">
+                <input type="text" class="text" data-step="1">
+              </div>
+              <div class="small-2 columns">
+                <button class="tiny secondary postfix remove-step" disabled>Remove</button>
+              </div>
+            </div>
+          </div>
+          <div class="large-3 columns">
+            <button class="tiny expand add-step">Add step</button>
+          </div>
+        </div>
+        <div class="row">
           <div class="large-6 columns">
-            <h4>Expected results</h4>
-            <textarea></textarea>
+            <h5>Expected results</h5>
+            <textarea class="text expected"></textarea>
           </div>
           <div class="large-6 columns">
-            <h4>Actual results</h4>
-            <textarea></textarea>
+            <h5>Actual results</h5>
+            <textarea class="text actual"></textarea>
           </div>
         </div>
 <!--        <button>Generate BBCode</button>-->
       </form>
     </div>
     <div class="large-4 columns">
-      <!-- Insert BBCode output here -->
+      <ul class="tabs" data-tab>
+        <li class="tab-title active"><a href="#output">Output</a></li>
+        <li class="tab-title"><a href="#preview">Preview</a></li>
+      </ul>
+
+      <div class="tabs-content">
+        <div class="content active" id="output">
+          <pre class="output"></pre>
+        </div>
+        <div class="content" id="preview"></div>
+      </div>
     </div>
   </div>
 
@@ -56,7 +101,8 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.3/fastclick.min.js"></script>
   <script src="js/foundation.min.js"></script>
 
-  <script src="js/bbcode-config.js"></script>
-  <script src="js/bbcode-parser.js"></script>
+  <script src="js/xbbcode.js"></script>
+
+  <script src="js/script.js"></script>
 </body>
 </html>

@@ -1,0 +1,19 @@
+.step .right {
+  text-align: center;
+}
+button.postfix {
+  padding: 0;
+  border-color: #ccc;
+  border-left: none;
+}
+button.remove-step {
+  transition: 0s linear;
+}
+button.remove-step:hover {
+  color: #fff;
+  background-color: #c60f13;
+  border-color: #9e0c0f;
+}
+button.remove-step[disabled]:hover {
+  border-color: #bababa;
+}
