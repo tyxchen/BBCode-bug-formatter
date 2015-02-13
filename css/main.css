@@ -17,3 +17,7 @@ button.remove-step:hover {
 button.remove-step[disabled]:hover {
   border-color: #bababa;
 }
+pre,
+.preview {
+  white-space: pre-wrap;
+}

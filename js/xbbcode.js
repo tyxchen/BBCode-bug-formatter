@@ -602,9 +602,6 @@ var XBBCODE = (function() {
         if (config.removeMisalignedTags) {
             ret.html = ret.html.replace(/\[.*?\]/g,"");
         }
-        if (config.addInLineBreaks) {
-            ret.html = '<div style="white-space:pre;">' + ret.html + '</div>';
-        }
 
         ret.html = ret.html.replace("&#91;", "["); // put ['s back in
         ret.html = ret.html.replace("&#93;", "]"); // put ['s back in

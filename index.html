@@ -12,17 +12,19 @@
 </head>
 <body>
   <div class="row">
-  <h1>Build a bug</h1>
+    <div class="small-12 columns">
+      <h1>Build a bug</h1>
+    </div>
     <div class="large-8 columns">
       <form>
         <div class="row">
           <div class="small-12 columns">
             <h5>Description</h5>
-            <textarea class="text description" placeholder="Describe the bug"></textarea>
+            <textarea class="text description" rows="3" placeholder="Briefly describe the bug"></textarea>
           </div>
         </div>
         <div class="row">
-          <div class="large-6 columns">
+          <div class="small-6 columns">
             <h5>Browser version</h5>
             <div class="row collapse">
               <div class="small-8 columns">
@@ -33,7 +35,7 @@
               </div>
             </div>
           </div>
-          <div class="large-6 columns">
+          <div class="small-6 columns">
             <h5>Operating system</h5>
             <div class="row collapse">
               <div class="small-8 columns">
@@ -49,7 +51,7 @@
           <div class="large-12 columns">
             <h5>Steps to reproduce</h5>
           </div>
-          <div class="large-9 columns steps">
+          <div class="small-9 columns steps">
             <div class="row collapse step">
               <div class="small-1 columns">
                 <label class="right inline">1. </label>
@@ -57,23 +59,23 @@
               <div class="small-9 columns">
                 <input type="text" class="text" data-step="1">
               </div>
-              <div class="small-2 columns">
+              <div class="small-2 end columns">
                 <button class="tiny secondary postfix remove-step" disabled>Remove</button>
               </div>
             </div>
           </div>
-          <div class="large-3 columns">
+          <div class="small-3 columns">
             <button class="tiny expand add-step">Add step</button>
           </div>
         </div>
         <div class="row">
           <div class="large-6 columns">
             <h5>Expected results</h5>
-            <textarea class="text expected"></textarea>
+            <textarea class="text expected" rows="4"></textarea>
           </div>
           <div class="large-6 columns">
             <h5>Actual results</h5>
-            <textarea class="text actual"></textarea>
+            <textarea class="text actual" rows="4"></textarea>
           </div>
         </div>
 <!--        <button>Generate BBCode</button>-->
@@ -89,7 +91,9 @@
         <div class="content active" id="output">
           <pre class="output"></pre>
         </div>
-        <div class="content" id="preview"></div>
+        <div class="content" id="preview">
+          <div class="preview"></div>
+        </div>
       </div>
     </div>
   </div>

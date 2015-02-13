@@ -50,7 +50,7 @@
         text += $(".actual").val() + "\n";
 
         $(".output").text(text);
-        $("#preview").html(XBBCODE.process({
+        $(".preview").html(XBBCODE.process({
           text: text,
           removeMisalignedTags: true,
           addInLineBreaks: true
@@ -84,7 +84,7 @@
                        "</div>" +
                        "<div class='small-9 columns'>" +
                        "<input type='text' class='text' data-step='" + count + "'>" +
-                       "</div><div class='small-2 columns'>" +
+                       "</div><div class='small-2 end columns'>" +
                        "<button class='tiny secondary postfix remove-step'>Remove</button>" +
                        "</div></div>");
 
