@@ -115,9 +115,9 @@
 
   // Link pressing enter in a steps text input to adding a new step
   $(".steps").on("keypress", ".text", function (e) {
-    e.preventDefault();
-
     if (e.keyCode === 10 || e.keyCode === 13) {
+      e.preventDefault();
+
       $(".add-step").trigger("click");
       $(".steps .step:last-child input").trigger("focus");
     }
