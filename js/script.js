@@ -113,6 +113,23 @@
     $(".text").trigger("keyup");
   });
 
+  // Link pressing enter in a steps text input to adding a new step
+  $(".steps").on("keypress", ".text", function (e) {
+    e.preventDefault();
+
+    if (e.keyCode === 10 || e.keyCode === 13) {
+      $(".add-step").trigger("click");
+      $(".steps .step:last-child input").trigger("focus");
+    }
+  });
+
+  // Link pressing Cmd-Enter/Ctrl-Enter on last textarea to generating BBCode
+  $("form .row:last").find("input, textarea").keypress(function (e) {
+    if ((e.keyCode == 10 || e.keyCode == 13) && (e.ctrlKey || e.keyCode == 224 || e.keyCode == 17 || e.keyCode == 91)) {
+      $(".generate").trigger("click");
+    }
+  });
+
   // Generate BBCode on click
   $(".generate, .write").click(function () {
     var errored = false,
