@@ -1,11 +1,72 @@
-h1 {
+@keyframes vibrate {
+  0% {
+    transform: translateX(0)
+  }
+  10% {
+    transform: translateX(-0.4em)
+  }
+  20% {
+    transform: translateX(0)
+  }
+  30% {
+    transform: translateX(0.4em)
+  }
+  40% {
+    transform: translateX(0)
+  }
+  50% {
+    transform: translateX(-0.4em)
+  }
+  60% {
+    transform: translateX(0)
+  }
+  70% {
+    transform: translateX(0.4em)
+  }
+  80% {
+    transform: translateX(0)
+  }
+  90% {
+    transform: translateX(-0.4em)
+  }
+  100% {
+    transform: translateX(0)
+  }
+}
+
+body > .row {
   margin-top: 1em;
+}
+.fixed {
+  position: fixed;
+  margin: 0;
+}
+.top {
+  top: 0;
+}
+.left {
+  left: 0;
+}
+.right {
+  right: 0;
+}
+.bottom {
+  bottom: 0;
 }
 .hidden {
   display: none;
 }
+.ghost {
+  visibility: hidden;
+}
 .step .right {
   text-align: center;
+}
+.input-errored {
+  border: 1px solid #b00 !important;
+}
+.input-errored-anim {
+  animation: 0.3s vibrate linear;
 }
 button.postfix {
   padding: 0;
@@ -23,13 +84,40 @@ button.remove-step:hover {
 button.remove-step[disabled]:hover {
   border-color: #bababa;
 }
+.write {
+  margin-top: 0.75em;
+  margin-bottom: 0.5em;
+}
 pre,
 .preview {
   white-space: pre-wrap;
 }
 .output {
-  -webkit-user-select: all;
-     -moz-user-select: all;
-      -ms-user-select: all;
-          user-select: all;
+  padding: 1em;
+  border: 1px solid #ccc;
+  user-select: all;
+}
+.hint {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 0.8em;
+  padding: 0.3em 0.5em;
+  border-radius: 3px;
+  transform: translate(-110%, -50%);
+}
+.hint::after {
+  content: "";
+  position: absolute;
+  right: -5px;
+  bottom: 0.5em;
+  border-width: 6px 0 6px 6px;
+  border-color: transparent rgba(0, 0, 0, 0.8);
+  border-style: solid;
+}
+.hint-error {
+  background-color: #b00;
+}
+.hint-error::after {
+  border-left-color: #b00;
 }

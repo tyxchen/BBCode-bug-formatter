@@ -8,7 +8,7 @@
   var browser = (function(){var u=navigator.userAgent,t,M=u.match(/(opera|chrome|crios|safari|firefox|msie|trident(?=\/))\/?\s*(\S+)/i)||[];if(/trident/i.test(M[1])){t=/\brv[ :]+(\d+)/g.exec(u)||[];return 'IE '+(t[1]||'')}if(M[1]==='CriOS')return "Chrome "+M[2];if(M[1]==='Chrome'){t=u.match(/\bOPR\/(\d+)/);if(t!=null)return 'Opera '+t[1]}M=M[2]?[M[1],M[2]]:[navigator.appName,navigator.appVersion,'-?'];if((t=u.match(/version\/(\d+)/i))!=null)M.splice(1,1,t[1]);return M.join(' ')})(), // jshint ignore:line
 
   // Detects the operating system of a user
-      os = (function(){var u=navigator.userAgent,t,M=u.match(/(Windows NT|Mac OS X|CPU (iPhone )?OS|Android|Linux) (\S+)(?=;)/i);M=M[1]&&M[3]?[M[1],M[3]]:["Unknown"];if(/Windows/i.test(M[0])){t={"5.0":"2000","5.1":"XP","5.2":"XP","6.0":"Vista","6.1":"7","6.2":"8","6.3":"8.1","10.0":"10"};return "Windows "+t[M[1]]}if(/Mac/.test(M[0]))return "Mac OS X "+M[1].replace("_",".");if(/CPU(.+)OS/.test(M[0]))return "iOS "+M[1].replace("_",".");return M.join(" ")})(), // jshint ignore:line
+      os = (function(){var u=navigator.userAgent,t,M=u.match(/(Windows NT|Mac OS X|CPU (iPhone )?OS|Android|Linux) (\S+)(?=;|\))/i);M=M[1]&&M[3]?[M[1],M[3]]:["Unknown"];if(/Windows/i.test(M[0])){t={"5.0":"2000","5.1":"XP","5.2":"XP","6.0":"Vista","6.1":"7","6.2":"8","6.3":"8.1","10.0":"10"};return "Windows "+t[M[1]]}if(/Mac/.test(M[0]))return "Mac OS X "+M[1].replace("_",".");if(/CPU(.+)OS/.test(M[0]))return "iOS "+M[1].replace("_",".");return M.join(" ")})(), // jshint ignore:line
 
   // Parses text from the various input fields
       parseHandler = function () {
@@ -39,7 +39,7 @@
 
         text += "[b]Expected results:[/b]\n\n";
 
-        text += $(".expected").val() + "\n";
+        text += $(".expected").val() + "\n\n";
 
         // Actual results
 
@@ -113,10 +113,36 @@
     $(".text").trigger("keyup");
   });
 
-  // Attach handlers
-  $(".steps").on("keyup", ".text", parseHandler);
+  // Generate BBCode on click
+  $(".generate, .write").click(function () {
+    var errored = false,
+        top;
 
-  $(".text").keyup(parseHandler);
+    $(".hint").remove();
+
+    $(".text").each(function () {
+      if ($(this).val() === "") {
+        top = $(this).prev().is("h5") ? 4.3 : 1.5;
+        errored = true;
+
+        $(this).addClass("input-errored input-errored-anim");
+        $(this).parent().append("<div class='hint hint-error' style='top:" + top + "em'>Input can't be empty!</div>");
+      } else {
+        $(this).removeClass("input-errored");
+      }
+    });
+
+    if (!errored) {
+      $("body > .row > .columns").toggleClass("hidden");
+
+      parseHandler();
+    }
+
+    // remove animation class after animation has been completed
+    setTimeout(function () {
+      $(".text").removeClass("input-errored-anim");
+    }, 320);
+  });
 
   // Initialize Foundation and parsing of fields
   $(document).foundation();

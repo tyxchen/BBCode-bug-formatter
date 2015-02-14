@@ -15,7 +15,7 @@
     <div class="small-12 columns">
       <h1>Build a bug</h1>
     </div>
-    <div class="large-8 columns">
+    <div class="large-12 columns">
       <form>
         <div class="row">
           <div class="small-12 columns">
@@ -69,19 +69,34 @@
           </div>
         </div>
         <div class="row">
-          <div class="large-6 columns">
+          <div class="large-12 columns">
             <h5>Expected results</h5>
-            <textarea class="text expected" rows="4"></textarea>
-          </div>
-          <div class="large-6 columns">
-            <h5>Actual results</h5>
-            <textarea class="text actual" rows="4"></textarea>
+            <textarea class="text expected" rows="4" placeholder="What did you expect would happen?"></textarea>
           </div>
         </div>
-<!--        <button>Generate BBCode</button>-->
+        <div class="row">
+          <div class="large-12 columns">
+            <h5>Actual results</h5>
+            <textarea class="text actual" rows="4" placeholder="What actualy happened?"></textarea>
+          </div>
+        </div>
+
+        <a class="button expand fixed left right bottom generate">Generate BBCode</a>
+        <a class="button ghost">Generate BBCode</a> <!-- Ghost button to preserve layout -->
       </form>
     </div>
-    <div class="large-4 columns">
+    <div class="large-12 columns hidden">
+      <div class="row collapse">
+        <div class="small-10 columns">
+          <h1>Output</h1>
+        </div>
+        <div class="small-2 columns">
+          <a class="button radius write">Close</a>
+        </div>
+      </div>
+
+      <p class="lead">Click below to highlight text to copy</p>
+
       <ul class="tabs" data-tab>
         <li class="tab-title active"><a href="#output">Output</a></li>
         <li class="tab-title"><a href="#preview">Preview</a></li>
