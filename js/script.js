@@ -150,7 +150,9 @@
     });
 
     if (!errored) {
-      $("body > .row > .columns").toggleClass("hidden");
+      $("body").toggleClass("writing displaying");
+      $("#main > .row > .columns").toggleClass("hidden");
+      $(".generate").toggle();
 
       parseHandler();
     }

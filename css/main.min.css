@@ -92,24 +92,18 @@
   }
 }
 
-body > .row {
-  margin-top: 1em;
+body {
+  overflow-y: hidden;
 }
-.fixed {
-  position: fixed;
-  margin: 0;
+#main {
+  position: relative;
+  box-sizing: border-box;
+  max-height: calc(100% - 3.3625em); /* 3.3625em is the height of .generate */
+  padding-top: 1em;
+  overflow-y: auto;
 }
-.top {
-  top: 0;
-}
-.left {
-  left: 0;
-}
-.right {
-  right: 0;
-}
-.bottom {
-  bottom: 0;
+.displaying #main {
+  max-height: 100%;
 }
 .hidden {
   display: none;
@@ -143,7 +137,15 @@ button.remove-step:hover {
 button.remove-step[disabled]:hover {
   border-color: #bababa;
 }
+.generate {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+}
 .write {
+  float: right;
   margin-top: 0.75em;
   margin-bottom: 0.5em;
 }
