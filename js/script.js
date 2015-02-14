@@ -8,7 +8,7 @@
   var browser = (function(){var u=navigator.userAgent,t,M=u.match(/(opera|chrome|crios|safari|firefox|msie|trident(?=\/))\/?\s*(\S+)/i)||[];if(/trident/i.test(M[1])){t=/\brv[ :]+(\d+)/g.exec(u)||[];return 'IE '+(t[1]||'')}if(M[1]==='CriOS')return "Chrome "+M[2];if(M[1]==='Chrome'){t=u.match(/\bOPR\/(\d+)/);if(t!=null)return 'Opera '+t[1]}M=M[2]?[M[1],M[2]]:[navigator.appName,navigator.appVersion,'-?'];if((t=u.match(/version\/(\d+)/i))!=null)M.splice(1,1,t[1]);return M.join(' ')})(), // jshint ignore:line
 
   // Detects the operating system of a user
-      os = (function(){var u=navigator.userAgent,t,M=u.match(/(Windows NT|Mac OS X|CPU (iPhone )?OS|Android|Linux) ([\d\._]+)(?=[;\) ])/i);M=M&&M[1]&&M[3]?[M[1],M[3].replace("_",".")]:["Unknown"];if(/Windows/i.test(M[0])){t={"5.0":"2000","5.1":"XP","5.2":"XP","6.0":"Vista","6.1":"7","6.2":"8","6.3":"8.1","10.0":"10"};return "Windows "+t[M[1]]}if(/CPU(.+)OS/.test(M[0]))return "iOS "+M[1].replace("_",".");return M.join(" ")})(), // jshint ignore:line
+      os = (function(){var u=navigator.userAgent,t,M=u.match(/(Windows NT|Mac OS X|CPU (iPhone )?OS|Android|Linux) (\S+?)(?=[;\) ])/i);M=M&&M[1]&&M[3]?[M[1],M[3]]:["Unknown"];if(/Windows/i.test(M[0])){t={"5.0":"2000","5.1":"XP","5.2":"XP","6.0":"Vista","6.1":"7","6.2":"8","6.3":"8.1","10.0":"10"};return "Windows "+t[M[1].replace("_",".")]}if(/CPU(.+)OS/.test(M[0]))return "iOS "+M[1].replace("_",".");return M.join(" ")})(), // jshint ignore:line
 
   // Parses text from the various input fields
       parseHandler = function () {
@@ -113,18 +113,40 @@
     $(".text").trigger("keyup");
   });
 
-  // Link pressing enter in a steps text input to adding a new step
+  // Link keys while entering steps
   $(".steps").on("keypress", ".text", function (e) {
-    if (e.keyCode === 10 || e.keyCode === 13) {
-      e.preventDefault();
+    switch (e.keyCode) {
+      // Enter triggers adding a new step
+      // However, if Cmd/Ctrl was pressed, we generate the BBCode
+      case 10:
+      case 13:
+        e.preventDefault();
 
-      $(".add-step").trigger("click");
-      $(".steps .step:last-child input").trigger("focus");
+
+        if (e.ctrlKey || e.keyCode === 224 || e.keyCode === 17 || e.keyCode === 91) {
+          $(".generate").trigger("click");
+        } else {
+          $(".add-step").trigger("click");
+          $(".steps .step:last-child input").trigger("focus");
+        }
+        break;
+
+      // Backspace triggers removing the step if and only if step is empty and step is the last child
+      case 8:
+        if ($(this).val() === "" && $(this).parents(".step").is(":last-child")) {
+          e.preventDefault();
+
+          $(this).parent().next().children("button").trigger("click");
+          $(".steps .step:last-child input").trigger("focus");
+        }
+        break;
+
+      default:
     }
   });
 
   // Link pressing Cmd-Enter/Ctrl-Enter on last textarea to generating BBCode
-  $("form .row:last").find("input, textarea").keypress(function (e) {
+  $(".text").keypress(function (e) {
     if ((e.keyCode == 10 || e.keyCode == 13) && (e.ctrlKey || e.keyCode == 224 || e.keyCode == 17 || e.keyCode == 91)) {
       $(".generate").trigger("click");
     }
