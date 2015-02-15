@@ -1,14 +1,71 @@
 /* jshint browser: true, es3: true */
-/* global jQuery: false, XBBCODE: false, browser: true, os: true, parseHandler: true */
+/* global jQuery: false, XBBCODE: false */
+
 (function ($) {
   "use strict";
 
-  // Detects a browser's version
+  // Detects a user's browser's version and OS
   // Modified from https://stackoverflow.com/a/5918791/3472393
-  var browser = (function(){var u=navigator.userAgent,t,M=u.match(/(opera|chrome|crios|safari|firefox|msie|trident(?=\/))\/?\s*(\S+)/i)||[];if(/trident/i.test(M[1])){t=/\brv[ :]+(\d+)/g.exec(u)||[];return 'IE '+(t[1]||'')}if(M[1]==='CriOS')return "Chrome "+M[2];if(M[1]==='Chrome'){t=u.match(/\bOPR\/(\d+)/);if(t!=null)return 'Opera '+t[1]}M=M[2]?[M[1],M[2]]:[navigator.appName,navigator.appVersion,'-?'];if((t=u.match(/version\/(\d+)/i))!=null)M.splice(1,1,t[1]);return M.join(' ')})(), // jshint ignore:line
+  var userInfo = (function () {
+        var u = navigator.userAgent, t;
 
-  // Detects the operating system of a user
-      os = (function(){var u=navigator.userAgent,t,M=u.match(/(Windows NT|Mac OS X|CPU (iPhone )?OS|Android|Linux) (\S+?)(?=[;\) ])/i);M=M&&M[1]&&M[3]?[M[1],M[3]]:["Unknown"];if(/Windows/i.test(M[0])){t={"5.0":"2000","5.1":"XP","5.2":"XP","6.0":"Vista","6.1":"7","6.2":"8","6.3":"8.1","10.0":"10"};return "Windows "+t[M[1].replace("_",".")]}if(/CPU(.+)OS/.test(M[0]))return "iOS "+M[1].replace("_",".");return M.join(" ")})(), // jshint ignore:line
+        return {
+          browser : (function () {
+            var M = u.match(/(opera|chrome|crios|safari|firefox|msie|trident(?=\/))\/?\s*(\S+)/i) || [];
+            // Internet Explorer >11
+            if (/trident/i.test(M[1])) {
+              t = /\brv[ :]+(\d+)/g.exec(u) || [];
+              return 'Internet Explorer ' + (t[1] || '');
+            }
+            // Chrome for iOS
+            if (M[1] === 'CriOS') {
+              return "Chrome " + M[2];
+            }
+            // Opera
+            if (M[1] === 'Chrome') {
+              t = u.match(/\bOPR\/(\S+)/);
+              if(t !== null) {
+                return 'Opera ' + t[1];
+              }
+            }
+            // Default
+            M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+            if ((t = u.match(/version\/(\d+)/i)) !== null) {
+              M.splice(1, 1, t[1]);
+            }
+            return M.join(' ');
+          })(),
+
+          os: (function () {
+            var M = u.match(/(Windows NT|Mac OS X|CPU (iPhone )?OS|Android|Linux) (\S+?)(?=[;\) ])/i);
+            M = (M && M[1] && M[3]) ? [M[1], M[3].replace("_", ".")] : ["Unknown"];
+            // Map Windows NT versions to Windows versions
+            if (/Windows/i.test(M[0])) {
+              t = {
+                "5.0": "2000",
+                "5.1": "XP",
+                "5.2": "XP",
+                "6.0": "Vista",
+                "6.1": "7",
+                "6.2": "8",
+                "6.3": "8.1",
+                "10.0": "10"
+              };
+              M = ["Windows", t[M[1]]];
+            }
+            // Browsers running on iOS use "CPU OS" to identify themselves in the UA
+            if (/CPU(.+)OS/i.test(M[0])) {
+              M[0] = "iOS";
+            }
+            // Replace x86.64 with x86_64
+            if (M[0] === "Linux") {
+              M[1] = M[1].replace(".", "_");
+            }
+
+            return M.join(" ");
+          })()
+        };
+      }),
 
   // Parses text from the various input fields
       parseHandler = function () {
@@ -61,8 +118,8 @@
   });
 
   // Fill in browser and OS fields (autodetection)
-  $(".browser").val(browser);
-  $(".os").val(os);
+  $(".browser").val(userInfo.browser);
+  $(".os").val(userInfo.os);
 
   $(".toggle-browser, .toggle-os").click(function () {
     var $parent = $(this).parent();
